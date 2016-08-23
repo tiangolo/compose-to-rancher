@@ -12,11 +12,11 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='compose-to-rancher',
-    version='0.1.0a1',
+    version='0.1.0a2',
 
-    description='Docker Compose V2 to Rancher compatible Docker Compose V1',
+    description='Convert Docker Compose V2 to Rancher compatible Docker Compose V1',
     long_description=long_description,
-    url='',
+    url='https://github.com/tiangolo/compose-to-rancher',
     author='Sebastian Ramirez',
     author_email='tiangolo@gmail.com',
     license='MIT',
