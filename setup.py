@@ -12,7 +12,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='compose-to-rancher',
-    version='0.1.0a2',
+    version='0.1.0a3',
 
     description='Convert Docker Compose V2 to Rancher compatible Docker Compose V1',
     long_description=long_description,
