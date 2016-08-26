@@ -21,7 +21,7 @@ def convert_compose_to_rancher(compose_v2_data):
     for service, service_options in compose_v2_data['services'].items():
         #error if no image option is declared
         if 'image' not in service_options:
-            raise ValueError('no image in service {}'.format(option))
+            raise ValueError('No "image" option in service "{0}"'.format(service))
 
         #create new dictionary
         new_compose[service] = {}
