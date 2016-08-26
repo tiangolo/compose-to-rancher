@@ -28,10 +28,10 @@ def convert_compose_to_rancher(compose_v2_data):
 
         for option in service_options:
             if option == 'depends_on':
-                add_or_merge_(new_compose[service], 'links', service_options['depends_on'])
+                add_or_merge(new_compose[service], 'links', service_options['depends_on'])
 
             if option not in EXCLUDED_OPTIONS:
-                add_or_merge_(new_compose[service], option, service_options[option])
+                add_or_merge(new_compose[service], option, service_options[option])
 
 
     return new_compose
@@ -77,7 +77,7 @@ def main():
 # Utility Functions
 #######################
 
-def add_or_merge_(dictionary, key, values):
+def add_or_merge(dictionary, key, values):
     """
     Add or merge the values in 'values' to 'dictionary' at 'key'
     """
