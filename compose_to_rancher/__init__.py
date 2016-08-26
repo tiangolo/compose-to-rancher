@@ -6,6 +6,11 @@ import yaml
 default_file_path = 'docker-compose.yml'
 default_output_file_path = 'docker-compose-v1.yml'
 
+EXCLUDED_OPTIONS = ['build', 'depends_on']
+
+#######################
+# Base Functions
+#######################
 
 def convert_compose_to_rancher(compose_v2_data):
     """
@@ -13,13 +18,22 @@ def convert_compose_to_rancher(compose_v2_data):
     V1 docker-compose data structure
     """
     new_compose = {}
-    for service, contents in compose_v2_data['services'].items():
+    for service, service_options in compose_v2_data['services'].items():
+        #error if no image option is declared
+        if 'image' not in service_options:
+            raise ValueError('No "image" option in service "{0}"'.format(service))
+
+        #create new dictionary
         new_compose[service] = {}
-        for key in contents:
-            if key != 'build':
-                new_compose[service][key] = contents[key]
-        if 'image' not in contents:
-            raise ValueError('no image in service {}'.format(key))
+
+        for option in service_options:
+            if option == 'depends_on':
+                add_or_merge(new_compose[service], 'links', service_options['depends_on'])
+
+            if option not in EXCLUDED_OPTIONS:
+                add_or_merge(new_compose[service], option, service_options[option])
+
+
     return new_compose
 
 
@@ -37,6 +51,9 @@ def read_write_compose(file_path, output_file_path):
     with open(output_file_path, mode='w') as f_out:
         f_out.write(yaml_out)
 
+#######################
+# Main
+#######################
 
 def main():
     """
@@ -55,6 +72,28 @@ def main():
     file_path = args.file
     output_file_path = args.output
     read_write_compose(file_path, output_file_path)
+
+#######################
+# Utility Functions
+#######################
+
+def add_or_merge(dictionary, key, values):
+    """
+    Add or merge the values in 'values' to 'dictionary' at 'key'
+    """
+    if key in dictionary:
+        if isinstance(values, list):
+            dictionary[key] = dictionary[key] + values
+        else:
+            dictionary[key].update(values)
+    else:
+        dictionary[key] = values
+
+    return dictionary
+
+#######################
+# Init
+#######################
 
 if __name__ == '__main__':
     main()
