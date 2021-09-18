@@ -1,6 +1,17 @@
 Compose to Rancher
 ==================
 
+🚨 DEPRECATED 🚨
+---------------
+
+This package was useful when Rancher had their own orchestration system that was not compatible with Docker Compose V2. Several years ago.
+
+Then Rancher deprecated their own orchestration system to become a Kubernetes manager.
+
+So, this tool is no longer useful, you shouldn't use it. It's still here only for posterity, now archived.
+
+-----
+
 Convert Docker Compose V2 `docker-compose.yml` to a Rancher compatible Docker Compose V1 file, by default in `docker-compose-v1.yml`.
 
 ----
